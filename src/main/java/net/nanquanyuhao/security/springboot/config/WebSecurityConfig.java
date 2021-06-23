@@ -51,14 +51,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+
+        http.csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/r/r1").hasAuthority("p1")
                 .antMatchers("/r/r2").hasAuthority("p2")
                 // 所有 /r/** 的请求必须认证通过
                 .antMatchers("/r/**").authenticated()
                 .anyRequest().permitAll() // 除了 /r/** ，其他的请求可以访问
                 .and()
-                .formLogin() // 允许表单登录
+                // 允许表单登录
+                .formLogin()
+                // 登录页面
+                .loginPage("/login-view")
+                .loginProcessingUrl("/login")
                 // 自定义登录成功的页面地址
                 .successForwardUrl("/login-success");
     }
