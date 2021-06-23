@@ -3,7 +3,6 @@ package net.nanquanyuhao.security.springboot.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,7 +21,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      *
      * @return
      */
-    @Bean
+    /*@Bean
     @Override
     protected UserDetailsService userDetailsService() {
 
@@ -31,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         manager.createUser(User.withUsername("lisi").password("456").authorities("p2").build());
 
         return manager;
-    }
+    }*/
 
     /**
      * 密码编码器
