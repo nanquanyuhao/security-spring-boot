@@ -2,6 +2,7 @@ package net.nanquanyuhao.security.springboot.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * Spring Security 配置类
  */
 @Configuration
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
@@ -55,8 +57,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/r/r1").hasAuthority("p1")
-                .antMatchers("/r/r2").hasAuthority("p2")
+                //.antMatchers("/r/r1").hasAuthority("p1")
+                //.antMatchers("/r/r2").hasAuthority("p2")
                 // 所有 /r/** 的请求必须认证通过
                 .antMatchers("/r/**").authenticated()
                 .anyRequest().permitAll() // 除了 /r/** ，其他的请求可以访问
