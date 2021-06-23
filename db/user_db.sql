@@ -34,6 +34,6 @@ CREATE TABLE `t_user`  (
 -- Records of t_user
 -- ----------------------------
 INSERT INTO `t_user` VALUES (1, 'zhangsan', '$2a$10$aFsOFzujtPCnUCUKcozsHux0rQ/3faAHGFSVb9Y.B1ntpmEhjRtru', '张三', '123456');
-INSERT INTO `t_user` VALUES (2, 'lisi', '456', '李四', NULL);
+INSERT INTO `t_user` VALUES (2, 'lisi', '$2a$10$xu100xpMjdbzmIwqrnGd1Ou/OFf2ZhfflWhEH/TOcRLnY0QQr3E6u', '李四', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
