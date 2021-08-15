@@ -61,21 +61,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 //.antMatchers("/r/r2").hasAuthority("p2")
                 // 所有 /r/** 的请求必须认证通过
                 .antMatchers("/r/**").authenticated()
-                .anyRequest().permitAll() // 除了 /r/** ，其他的请求可以访问
+                // 除了上述的 /r/** ，其他的请求可以任意访问
+                .anyRequest().permitAll()
                 .and()
                 // 允许表单登录
                 .formLogin()
-                // 登录页面
+                // 通常用于自定义的登录页面地址，权限不足跳转会跳转至此登陆页
                 .loginPage("/login-view")
+                // 实际验证登录表单的地址
                 .loginProcessingUrl("/login")
                 // 自定义登录成功的页面地址
                 .successForwardUrl("/login-success")
-                .and()
-                .sessionManagement()
+                // 以下配置为设置 session 的管理策略，此处配置为有需要则创建
+                .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-                .and()
-                .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login-view?logout");
+                // 以下两行是追加登录相关的配置
+                .and().logout()
+                // 设置登录调用的地址以及登出后跳转到的位置
+                .logoutUrl("/logout").logoutSuccessUrl("/login-view?logout");
     }
 }

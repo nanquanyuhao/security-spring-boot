@@ -11,6 +11,7 @@
     <title>用户登录</title>
 </head>
 <body>
+<%-- login 地址对照 spring-security 实际验证登录表单的地址，配置于 WebSecurityConfig --%>
 <form action="login" method="post">
     用户名：<input type="text" name="username"><br>
     密&nbsp;&nbsp;&nbsp;码:

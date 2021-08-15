@@ -23,7 +23,7 @@ public class LoginController {
     @RequestMapping(value = "/login-success", produces = "text/plain;charset=utf-8")
     public String loginSuccess() {
 
-        // 提示屈居用户名称登录成功
+        // 提示用户名称登录成功
         return getUsername() + "登录成功";
     }
 
