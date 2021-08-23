@@ -59,15 +59,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //.antMatchers("/r/r1").hasAuthority("p1")
                 //.antMatchers("/r/r2").hasAuthority("p2")
-                // 所有 /r/** 的请求必须认证通过
-                .antMatchers("/r/**").authenticated()
+                // 所有 /r/** 请求必须认证通过；/test/** 请求必须认证通过，为适配后来添加的 test 控制器
+                .antMatchers("/r/**", "/test/**").authenticated()
                 // 除了上述的 /r/** ，其他的请求可以任意访问
                 .anyRequest().permitAll()
                 .and()
                 // 允许表单登录
                 .formLogin()
-                // 通常用于自定义的登录页面地址，权限不足跳转会跳转至此登陆页
-                .loginPage("/login-view")
+                // 通常用于自定义的登录页面地址，未认证跳转会跳转至此登陆页，默认不设置是 /login
+                //.loginPage("/login-view")
                 // 实际验证登录表单的地址
                 .loginProcessingUrl("/login")
                 // 自定义登录成功的页面地址
