@@ -63,6 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        // 临时关闭 csrf
         http.csrf().disable()
                 .authorizeRequests()
                 //.antMatchers("/r/r1").hasAuthority("p1")
@@ -75,9 +76,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 允许表单登录
                 .formLogin()
                 // 通常用于自定义的登录页面地址，未认证跳转会跳转至此登陆页，默认不设置是 /login
-                //.loginPage("/login-view")
+                .loginPage("/login-view")
                 // 实际验证登录表单的地址
-                .loginProcessingUrl("/login")
+                .loginProcessingUrl("/user/login")
                 // 自定义登录成功的页面地址
                 .successForwardUrl("/login-success")
                 // 以下配置为设置 session 的管理策略，此处配置为有需要则创建
