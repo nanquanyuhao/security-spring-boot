@@ -32,6 +32,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return manager;
     }*/
 
+    /*@Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String password = passwordEncoder.encode("123");
+        auth.inMemoryAuthentication().withUser("lucy").password(password).roles("admin");
+    }*/
+
     /**
      * 密码编码器
      *
