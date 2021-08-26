@@ -62,12 +62,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // 配置没有权限访问跳转自定义页面
+        http.exceptionHandling().accessDeniedPage("/unauth");
 
         // 临时关闭 csrf
         http.csrf().disable()
                 .authorizeRequests()
                 //.antMatchers("/r/r1").hasAuthority("p1")
                 //.antMatchers("/r/r2").hasAuthority("p2")
+                .antMatchers("/login-success").hasAnyAuthority("p1", "p2")
                 // 所有 /r/** 请求必须认证通过；/test/** 请求必须认证通过，为适配后来添加的 test 控制器
                 .antMatchers("/r/**", "/test/**").authenticated()
                 // 除了上述的 /r/** ，其他的请求可以任意访问
@@ -79,8 +82,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login-view")
                 // 实际验证登录表单的地址
                 .loginProcessingUrl("/user/login")
-                // 自定义登录成功的页面地址
-                .successForwardUrl("/login-success")
+                // 自定义登录成功的页面跳转地址
+                //.successForwardUrl("/login-success")
+                // 与上面区别为这个是重定向
+                .defaultSuccessUrl("/login-success")
                 // 以下配置为设置 session 的管理策略，此处配置为有需要则创建
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)

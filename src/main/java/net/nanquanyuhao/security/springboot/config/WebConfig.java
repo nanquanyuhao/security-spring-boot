@@ -24,5 +24,8 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/").setViewName("redirect:/login-view");
         // 此处 setViewName("login") 会寻找项目路径下 /WEB-INF/view/login.jsp 页面，即访问 /login-view 就会到登录页
         registry.addViewController("/login-view").setViewName("login");
+
+        // 处理自定义未授权页面的情况
+        registry.addViewController("/unauth").setViewName("unauth");
     }
 }
