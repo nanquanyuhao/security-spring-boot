@@ -8,7 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String path = request.getContextPath();
-    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
 <html>
 <head>
@@ -16,7 +15,7 @@
 </head>
 <body>
 <%-- login 地址对照 spring-security 实际验证登录表单的地址，配置于 WebSecurityConfig --%>
-<form action="<%=basePath %>user/login" method="post">
+<form action="<%=path %>/user/login" method="post">
     用户名：<input type="text" name="username"><br>
     密&nbsp;&nbsp;&nbsp;码:
     <input type="password" name="password"><br>

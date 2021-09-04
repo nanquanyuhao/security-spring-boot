@@ -27,5 +27,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         // 处理自定义未授权页面的情况
         registry.addViewController("/unauth").setViewName("unauth");
+        // 为简单模拟登出，处理登录成功的页面
+        registry.addViewController("/login-success").setViewName("success");
     }
 }
