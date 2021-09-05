@@ -92,7 +92,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 配置没有权限访问跳转自定义页面
         http.exceptionHandling().accessDeniedPage("/unauth");
 
-        // 临时关闭 csrf
+        // 临时关闭 csrf，测试 csrf 功能需要开启
         http.csrf().disable()
                 .authorizeRequests()
                 //.antMatchers("/r/r1").hasAuthority("p1")
