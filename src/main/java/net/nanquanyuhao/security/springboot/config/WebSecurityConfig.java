@@ -1,13 +1,19 @@
 package net.nanquanyuhao.security.springboot.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 /**
  * Spring Security 配置类
@@ -15,6 +21,27 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private UserDetailsService userDetailsService;
+
+    @Autowired
+    private DataSource dataSource;
+
+    /**
+     * 注入作为存取 cookies 的数据源
+     *
+     * @return
+     */
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+
+        JdbcTokenRepositoryImpl jdbcTokenRepositoryImpl = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepositoryImpl.setDataSource(dataSource);
+        // 自动创建数据库表
+        // jdbcTokenRepositoryImpl.setCreateTableOnStartup(true);
+        return jdbcTokenRepositoryImpl;
+    }
 
     /**
      * 定义用户信息服务（查询用户信息）
@@ -92,6 +119,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 以下两行是追加登录相关的配置
                 .and().logout()
                 // 设置登录调用的地址以及登出后跳转到的位置
-                .logoutUrl("/logout").logoutSuccessUrl("/login-view?logout");
+                .logoutUrl("/logout").logoutSuccessUrl("/login-view?logout")
+                // 设置记住密码自动登录，有效时长 60s
+                .and().rememberMe().tokenRepository(persistentTokenRepository())
+                .tokenValiditySeconds(60)
+                .userDetailsService(userDetailsService);
+
     }
 }
